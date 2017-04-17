@@ -362,66 +362,38 @@
 <hr>
 <h3 id="Hexo关联github"><a href="#Hexo关联github" class="headerlink" title="Hexo关联github"></a>Hexo关联github</h3><ol>
 <li>在github新建repository,名为jiangxingling.github.io固定写法</li>
-<li>在Blog目录下修改_config.yml  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: https://github.com/jiangxingling/jiangxingling.github.io</div><div class="line">  branch: master</div></pre></td></tr></table></figure>
-</li>
+<li>在Blog目录下修改_config.yml</li>
 </ol>
-<p><strong>注意：所有的”:”后面都需要加上空格</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repository: https://github.com/jiangxingling/jiangxingling.github.io</div><div class="line">  branch: master</div><div class="line">注意：所有的&quot;:&quot;后面都需要加上空格</div></pre></td></tr></table></figure>
 <ol>
-<li>执行生成静态页面的命令:  <blockquote>
-<p>hexo generate        或者：hexo g  </p>
-</blockquote>
+<li><p>执行生成静态页面的命令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">hexo generate        或者：hexo g</div><div class="line">此时若出现如下报错： </div><div class="line">ERROR Local hexo not found in ~/blog  </div><div class="line">ERROR Try runing: &apos;npm install hexo --save&apos;</div><div class="line">则执行命令：  </div><div class="line">npm install hexo --save</div><div class="line">若无报错，则忽略此步骤</div></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>此时若出现如下报错：  </p>
-<blockquote>
-<p>ERROR Local hexo not found in ~/blog<br>ERROR Try runing: ‘npm install hexo –save’  </p>
-</blockquote>
-<p>则执行命令：  </p>
-<blockquote>
-<p>npm install hexo –save  </p>
-</blockquote>
-<p>若无报错，则忽略此步骤</p>
-<ol>
-<li>执行配置命令  <blockquote>
-<p>hexo deploy            或者：hexo d</p>
-</blockquote>
+<li><p>执行配置命令  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo deploy            或者：hexo d</div><div class="line">若执行命令hexo deploy仍然报错：无法连接git或找不到git，则执行如下命令来安装hexo-deployer-git:</div><div class="line">npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
 </li>
-</ol>
-<p>若执行命令hexo deploy仍然报错：无法连接git或找不到git，则执行如下命令来安装hexo-deployer-git  </p>
-<blockquote>
-<p>npm install hexo-deployer-git –save</p>
-</blockquote>
-<ol>
-<li>打开<a href="https://jiangxingling.github.io/,能够正常访问则完成初始化" target="_blank" rel="external">https://jiangxingling.github.io/,能够正常访问则完成初始化</a>  </li>
+<li><p>打开<a href="https://jiangxingling.github.io/" target="_blank" rel="external">https://jiangxingling.github.io/</a> ,能够正常访问则初始化完成  </p>
+</li>
 <li>添加ssh key到github  </li>
 </ol>
 <hr>
-<h3 id="五、发布文章"><a href="#五、发布文章" class="headerlink" title="五、发布文章"></a>五、发布文章</h3><ol>
-<li>执行如下命令新建文章<blockquote>
-<p>hexo new “name”</p>
-</blockquote>
+<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><ol>
+<li>执行如下命令新建文章<br>hexo new “name”<br>名为”name.md”的文件在/blog/source/_posts/目录下  </li>
+<li>编辑文章后发表<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate  //生成静态页面  </div><div class="line">hexo deploy   //将文章部署到github</div></pre></td></tr></table></figure>
 </li>
 </ol>
-<p>名为”name.md”的文件在/blog/source/_posts/目录下  </p>
-<ol>
-<li>编辑文章后发表  </li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">hexo generate  //生成静态页面  </div><div class="line">hexo deploy   //将文章部署到github</div></pre></td></tr></table></figure>
 <hr>
-<h3 id="六、改变Theme"><a href="#六、改变Theme" class="headerlink" title="六、改变Theme"></a>六、改变Theme</h3><ol>
-<li>在<a href="http://note.youdao.com/" target="_blank" rel="external">Hexo官网主题页</a>去搜寻自己喜欢的theme，以NexT主题为例。进入Blog目录执行如下命令:  </li>
-</ol>
-<blockquote>
-<p>git clone <a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next</a> themes/next</p>
+<h3 id="改变Theme"><a href="#改变Theme" class="headerlink" title="改变Theme"></a>改变Theme</h3><ol>
+<li>在<a href="http://note.youdao.com/" target="_blank" rel="external">Hexo官网主题页</a>去搜寻自己喜欢的theme，以NexT主题为例。进入Blog目录执行如下命令:<blockquote>
+<p>git clone <a href="https://github.com/iissnan/hexo-theme-next" target="_blank" rel="external">https://github.com/iissnan/hexo-theme-next</a> themes/next<br>或者是下载主题，将解压文件夹放到themes目录下</p>
 </blockquote>
-<p>或者是下载主题，将解压文件夹放到themes目录下</p>
-<ol>
+</li>
 <li>将blog目录下_config.yml里theme的名称landscape修改为next</li>
 <li>到blog目录下依次执行如下命令(每次部署文章的步骤)<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">hexo clean          //清除缓存文件 (db.json) 和已生成的静态文件 (public)  </div><div class="line">hexo g             //生成缓存和静态文件</div><div class="line">hexo d             //重新部署到服务器</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <hr>
-<h3 id="七、常见问题解决"><a href="#七、常见问题解决" class="headerlink" title="七、常见问题解决"></a>七、常见问题解决</h3><h4 id="1-每次hexo-d都要重新输入账户密码"><a href="#1-每次hexo-d都要重新输入账户密码" class="headerlink" title="1. 每次hexo d都要重新输入账户密码"></a>1. 每次hexo d都要重新输入账户密码</h4><p>将_config.yml文件中配置的repository: <a href="https://github.com/jiangxingling/jiangxingling.github.io" target="_blank" rel="external">https://github.com/jiangxingling/jiangxingling.github.io</a> 改为   git@github.com:jiangxingling/jiangxingling.github.io</p>
+<h3 id="常见问题解决"><a href="#常见问题解决" class="headerlink" title="常见问题解决"></a>常见问题解决</h3><h4 id="1-每次hexo-d都要重新输入账户密码"><a href="#1-每次hexo-d都要重新输入账户密码" class="headerlink" title="1. 每次hexo d都要重新输入账户密码"></a>1. 每次hexo d都要重新输入账户密码</h4><p>将_config.yml文件中配置的repository: <a href="https://github.com/jiangxingling/jiangxingling.github.io" target="_blank" rel="external">https://github.com/jiangxingling/jiangxingling.github.io</a> 改为   git@github.com:jiangxingling/jiangxingling.github.io</p>
 
           
         
