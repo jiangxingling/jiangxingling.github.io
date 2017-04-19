@@ -87,17 +87,17 @@
 
 
 
-<meta name="description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制    123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SE">
+<meta name="description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制   123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SER">
 <meta name="keywords">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android之内存优化">
 <meta property="og:url" content="http://yoursite.com/2017/04/17/Android之内存优化/index.html">
 <meta property="og:site_name" content="蒋先森">
-<meta property="og:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制    123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SE">
-<meta property="og:updated_time" content="2017-04-19T04:04:21.425Z">
+<meta property="og:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制   123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SER">
+<meta property="og:updated_time" content="2017-04-19T04:08:35.074Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android之内存优化">
-<meta name="twitter:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制    123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SE">
+<meta name="twitter:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制   123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SER">
 
 
 
@@ -325,13 +325,13 @@
         <h3 id="为什么要进行内存优化"><a href="#为什么要进行内存优化" class="headerlink" title="为什么要进行内存优化"></a>为什么要进行内存优化</h3><p>在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。</p>
 <hr>
 <h3 id="查看手机内存限制"><a href="#查看手机内存限制" class="headerlink" title="查看手机内存限制"></a>查看手机内存限制</h3><ol>
-<li>获取系统服务和内存限制  </li>
-</ol>
+<li><p>获取系统服务和内存限制  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">//获取系统服务</div><div class="line">ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);</div><div class="line">int memoryClass = activityManager.getMemoryClass();   //以M为单位</div></pre></td></tr></table></figure>
-<ol>
-<li>将读取的数据放入StringBuilder中并打印出来  </li>
-</ol>
+</li>
+<li><p>将读取的数据放入StringBuilder中并打印出来</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">StringBuilder strBuilder = new StringBuilder();</div><div class="line">strBuilder.append(&quot;memoryclass:&quot; + memoryClass);</div><div class="line">Toast.makeText(MainActivity.this, strBuilder.toString(), Toast.LENGTH_SHORT).show();</div></pre></td></tr></table></figure>
+</li>
+</ol>
 <hr>
 <h3 id="Android-系统内存管理方式"><a href="#Android-系统内存管理方式" class="headerlink" title="Android 系统内存管理方式"></a>Android 系统内存管理方式</h3><h4 id="系统内存分配与回收方式"><a href="#系统内存分配与回收方式" class="headerlink" title="系统内存分配与回收方式"></a>系统内存分配与回收方式</h4><ul>
 <li><p>每个App都相当于一个进程对应一个虚拟机</p>
@@ -349,15 +349,15 @@
 </ul>
 <h4 id="切换应用时后台App清理机制"><a href="#切换应用时后台App清理机制" class="headerlink" title="切换应用时后台App清理机制"></a>切换应用时后台App清理机制</h4><ul>
 <li>App 切换时依据LRU Cache<br>LRU算法：最近使用的排在最前面，最少可能的被清理掉</li>
-<li>onTrimMemory()回调方法<br>系统内存发生变化时，会调用该方法  </li>
+<li>onTrimMemory()回调方法<br>系统内存发生变化时，会调用该方法  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void onTrimMemory(int level) &#123;</div><div class="line">    super.onTrimMemory(level);</div><div class="line">    Toast.makeText(MainActivity.this, &quot;level:&quot; + level, Toast.LENGTH_SHORT).show();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public void onTrimMemory(int level) &#123;</div><div class="line">    super.onTrimMemory(level);</div><div class="line">    Toast.makeText(MainActivity.this, &quot;level:&quot; + level, Toast.LENGTH_SHORT).show();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="监控内存的几种方法"><a href="#监控内存的几种方法" class="headerlink" title="监控内存的几种方法"></a>监控内存的几种方法</h4><ul>
-<li>代码监控系统分配给App的内存以及剩余内存  </li>
-</ul>
+<li><p>代码监控系统分配给App的内存以及剩余内存</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Float totalMemory = Runtime.getRuntime().totalMemory() * 1.0f / (1024 * 1024);  //以M为单位</div><div class="line">Float freeMemory = Runtime.getRuntime().freeMemory() * 1.0f / (1024 * 1024);</div><div class="line">//系统的最大内存限制</div><div class="line">Float maxMemory = Runtime.getRuntime().maxMemory() * 1.0f / (1024 * 1024);</div></pre></td></tr></table></figure>
-<ul>
-<li>通过Android Monitor监控  </li>
+</li>
+<li><p>通过Android Monitor监控  </p>
+</li>
 <li>Tools – Android – Android Device Monitor<br>选择要查看的进程，点击Update Heap图标，再点击Cause GC  </li>
 </ul>
 <hr>
@@ -378,17 +378,17 @@
 </ul>
 <h4 id="避免内存泄露"><a href="#避免内存泄露" class="headerlink" title="避免内存泄露"></a>避免内存泄露</h4><blockquote>
 <p>内存泄露：由于代码瑕疵，导致这块内存，虽然已经停止不用了，但依然被其它东西引用着，使得GC没法对它回收。<br>内存泄露会导致剩余可用的Heap越来越少，频繁触发GC  </p>
+</blockquote>
 <ul>
 <li>要注意Activity泄漏  </li>
 <li>用Application Context而不是Activity Context  </li>
 <li>注意Cursor对象是否及时关闭  </li>
 </ul>
-</blockquote>
 <hr>
 <h3 id="OOM问题优化"><a href="#OOM问题优化" class="headerlink" title="OOM问题优化"></a>OOM问题优化</h3><h4 id="强引用与软引用"><a href="#强引用与软引用" class="headerlink" title="强引用与软引用"></a>强引用与软引用</h4><blockquote>
 <p>强引用在其生命周期中不会被GC回收，软引用可以被回收。</p>
-<h4 id="优化OOM问题的方法"><a href="#优化OOM问题的方法" class="headerlink" title="优化OOM问题的方法"></a>优化OOM问题的方法</h4></blockquote>
-<ul>
+</blockquote>
+<h4 id="优化OOM问题的方法"><a href="#优化OOM问题的方法" class="headerlink" title="优化OOM问题的方法"></a>优化OOM问题的方法</h4><ul>
 <li>注意临时Bitmap对象的及时回收  </li>
 <li>避免Bitmao的浪费  </li>
 <li>Try catch某些大内存分配的操作  </li>
