@@ -1,0 +1,708 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制  12345//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SE">
+<meta name="keywords">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android之内存优化">
+<meta property="og:url" content="http://yoursite.com/2017/04/17/Android之内存优化/index.html">
+<meta property="og:site_name" content="蒋先森">
+<meta property="og:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制  12345//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SE">
+<meta property="og:updated_time" content="2017-04-19T03:08:40.345Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android之内存优化">
+<meta name="twitter:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制  12345//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SE">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/04/17/Android之内存优化/"/>
+
+
+
+
+
+  <title> Android之内存优化 | 蒋先森 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">蒋先森</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/Android之内存优化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xl_Jiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/taekwondo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蒋先森">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Android之内存优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-17T20:57:37+08:00">
+                2017-04-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="为什么要进行内存优化"><a href="#为什么要进行内存优化" class="headerlink" title="为什么要进行内存优化"></a>为什么要进行内存优化</h3><p>在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。</p>
+<hr>
+<h3 id="查看手机内存限制"><a href="#查看手机内存限制" class="headerlink" title="查看手机内存限制"></a>查看手机内存限制</h3><ol>
+<li>获取系统服务和内存限制  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//获取系统服务</div><div class="line">ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);</div><div class="line">int memoryClass = activityManager.getMemoryClass();   //以M为单位</div><div class="line">```  </div><div class="line">2. 将读取的数据放入StringBuilder中并打印出来</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>StringBuilder strBuilder = new StringBuilder();<br>strBuilder.append(“memoryclass:” + memoryClass);<br>Toast.makeText(MainActivity.this, strBuilder.toString(), Toast.LENGTH_SHORT).show();<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">### Android 系统内存管理方式  </div><div class="line">#### 系统内存分配与回收方式  </div><div class="line">- 每个App都相当于一个进程对应一个虚拟机</div></pre></td></tr></table></figure></p>
+<p>ps  //查看系统中的所有进程<br>dumpsys meminfo <package>   //查看指定进程的具体信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">- 使用GC进行回收  </div><div class="line">&gt; GC是Java 垃圾处理器的简称，它只在Heap剩余空间不够时才发起垃圾回收动作。当GC被触发时，所有的线程都会被暂停。  </div><div class="line"></div><div class="line">#### App内存限制机制  </div><div class="line">- 每个App分配的最大内存限制，根据设备不同而不同  </div><div class="line">- 占用内存最厉害的是图片  </div><div class="line"></div><div class="line">#### 切换应用时后台App清理机制  </div><div class="line">- App 切换时依据LRU Cache  </div><div class="line">LRU算法：最近使用的排在最前面，最少可能的被清理掉</div><div class="line">- onTrimMemory()回调方法  </div><div class="line">系统内存发生变化时，会调用该方法</div></pre></td></tr></table></figure></package></p>
+<p>@Override<br>public void onTrimMemory(int level) {<br>    super.onTrimMemory(level);<br>    Toast.makeText(MainActivity.this, “level:” + level, Toast.LENGTH_SHORT).show();<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">#### 监控内存的几种方法  </div><div class="line">- 代码监控系统分配给App的内存以及剩余内存</div></pre></td></tr></table></figure></p>
+<p>Float totalMemory = Runtime.getRuntime().totalMemory() <em> 1.0f / (1024 </em> 1024);  //以M为单位<br>Float freeMemory = Runtime.getRuntime().freeMemory() <em> 1.0f / (1024 </em> 1024);<br>//系统的最大内存限制<br>Float maxMemory = Runtime.getRuntime().maxMemory() <em> 1.0f / (1024 </em> 1024);<br>```</p>
+<ul>
+<li>通过Android Monitor监控  </li>
+<li>Tools – Android – Android Device Monitor<br>选择要查看的进程，点击Update Heap图标，再点击Cause GC  </li>
+</ul>
+<hr>
+<h3 id="APP内存优化方法"><a href="#APP内存优化方法" class="headerlink" title="APP内存优化方法"></a>APP内存优化方法</h3><h4 id="数据结构优化"><a href="#数据结构优化" class="headerlink" title="数据结构优化"></a>数据结构优化</h4><ul>
+<li>频繁字符串拼接用StringBuilder  <blockquote>
+<p>通过+的方式进行字符串拼接，会产生中间字符串块，这些都是没有用的  </p>
+</blockquote>
+</li>
+<li>使用ArrayMap、SparseArray替换HashMap  </li>
+<li>内存抖动  </li>
+<li>再小的Class也要耗费0.5KB  </li>
+<li>HashMap一个entry需要额外占用32B  </li>
+</ul>
+<h4 id="对象复用"><a href="#对象复用" class="headerlink" title="对象复用"></a>对象复用</h4><ul>
+<li>复用系统自带的资源  </li>
+<li>ListView/GridView的ConvertView复用  </li>
+<li>避免在onDraw()方法里面执行对象的创建  </li>
+</ul>
+<h4 id="避免内存泄露"><a href="#避免内存泄露" class="headerlink" title="避免内存泄露"></a>避免内存泄露</h4><blockquote>
+<p>内存泄露：由于代码瑕疵，导致这块内存，虽然已经停止不用了，但依然被其它东西引用着，使得GC没法对它回收。<br>内存泄露会导致剩余可用的Heap越来越少，频繁触发GC  </p>
+<ul>
+<li>要注意Activity泄漏  </li>
+<li>用Application Context而不是Activity Context  </li>
+<li>注意Cursor对象是否及时关闭  </li>
+</ul>
+</blockquote>
+<hr>
+<h3 id="OOM问题优化"><a href="#OOM问题优化" class="headerlink" title="OOM问题优化"></a>OOM问题优化</h3><h4 id="强引用与软引用"><a href="#强引用与软引用" class="headerlink" title="强引用与软引用"></a>强引用与软引用</h4><blockquote>
+<p>强引用在其生命周期中不会被GC回收，软引用可以被回收。</p>
+<h4 id="优化OOM问题的方法"><a href="#优化OOM问题的方法" class="headerlink" title="优化OOM问题的方法"></a>优化OOM问题的方法</h4></blockquote>
+<ul>
+<li>注意临时Bitmap对象的及时回收  </li>
+<li>避免Bitmao的浪费  </li>
+<li>Try catch某些大内存分配的操作  </li>
+<li>加载Bitmap: 缩放比例、解码格式、局部加载</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/17/使用Github+Hexo搭建个人博客/" rel="prev" title="使用Github+Hexo搭建个人博客">
+                使用Github+Hexo搭建个人博客 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/taekwondo.jpg"
+               alt="xl_Jiang" />
+          <p class="site-author-name" itemprop="name">xl_Jiang</p>
+           
+              <p class="site-description motion-element" itemprop="description">Where there is a will, there is a way</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要进行内存优化"><span class="nav-number">1.</span> <span class="nav-text">为什么要进行内存优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看手机内存限制"><span class="nav-number">2.</span> <span class="nav-text">查看手机内存限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APP内存优化方法"><span class="nav-number">3.</span> <span class="nav-text">APP内存优化方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#数据结构优化"><span class="nav-number">3.1.</span> <span class="nav-text">数据结构优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对象复用"><span class="nav-number">3.2.</span> <span class="nav-text">对象复用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#避免内存泄露"><span class="nav-number">3.3.</span> <span class="nav-text">避免内存泄露</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OOM问题优化"><span class="nav-number">4.</span> <span class="nav-text">OOM问题优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#强引用与软引用"><span class="nav-number">4.1.</span> <span class="nav-text">强引用与软引用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化OOM问题的方法"><span class="nav-number">4.2.</span> <span class="nav-text">优化OOM问题的方法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xl_Jiang</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
