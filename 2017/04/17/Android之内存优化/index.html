@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/17/Android之内存优化/index.html">
 <meta property="og:site_name" content="蒋先森">
 <meta property="og:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制   123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SER">
-<meta property="og:updated_time" content="2017-04-19T04:11:06.622Z">
+<meta property="og:updated_time" content="2017-04-19T04:12:51.705Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android之内存优化">
 <meta name="twitter:description" content="为什么要进行内存优化在实际开发中，不再用到的对象因为被错误引用导致无法回收，从而造成内存泄漏，甚至内存溢出OOM(OutOfMemory)，程序崩溃。  查看手机内存限制 获取系统服务和内存限制   123//获取系统服务ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SER">
@@ -356,7 +356,7 @@
 <li><p>代码监控系统分配给App的内存以及剩余内存</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Float totalMemory = Runtime.getRuntime().totalMemory() * 1.0f / (1024 * 1024);  //以M为单位</div><div class="line">Float freeMemory = Runtime.getRuntime().freeMemory() * 1.0f / (1024 * 1024);</div><div class="line">//系统的最大内存限制</div><div class="line">Float maxMemory = Runtime.getRuntime().maxMemory() * 1.0f / (1024 * 1024);</div></pre></td></tr></table></figure>
 </li>
-<li><p>通过Android Monitor监控  </p>
+<li><p>通过Android Monitor监控</p>
 </li>
 <li>Tools – Android – Android Device Monitor<br>选择要查看的进程，点击Update Heap图标，再点击Cause GC  </li>
 </ul>
