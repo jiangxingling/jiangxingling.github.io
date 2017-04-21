@@ -250,6 +250,196 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/19/Android之屏幕适配/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xl_Jiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/taekwondo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蒋先森">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/19/Android之屏幕适配/" itemprop="url">
+                  Android之屏幕适配
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-19T15:30:22+08:00">
+                2017-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><h4 id="屏幕尺寸、屏幕分辨率、屏幕像素密度"><a href="#屏幕尺寸、屏幕分辨率、屏幕像素密度" class="headerlink" title="屏幕尺寸、屏幕分辨率、屏幕像素密度"></a>屏幕尺寸、屏幕分辨率、屏幕像素密度</h4><ul>
+<li><p>屏幕尺寸  </p>
+<blockquote>
+<p>指屏幕的对角线长度，单位是英寸，1英寸约等于2.54cm</p>
+</blockquote>
+</li>
+<li><p>屏幕分辨率  </p>
+<blockquote>
+<p>指在横纵向上的像素点数，单位是px，1px = 1个像素点<br>一般是纵向像素 <em> 横向像素，如1920 </em> 1080  </p>
+</blockquote>
+</li>
+<li><p>屏幕像素密度  </p>
+<blockquote>
+<p>指每英寸上的像素点数，单位是dpi (dot per inch)<br>屏幕像素密度与屏幕尺寸和屏幕分辨率有关<br>计算方式（以4.9英寸，1920<em>1080的手机为例）：dpi = √(1920</em>1920+1080*1080) / 4.9</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="dp、dip、dpi、sp、px"><a href="#dp、dip、dpi、sp、px" class="headerlink" title="dp、dip、dpi、sp、px"></a>dp、dip、dpi、sp、px</h4><ul>
+<li><p>dp、dip  </p>
+<blockquote>
+<p>Density Independent Pixels的缩写，即密度无关像素。<br>以160dpi为基准，1dip = 1px，在320dpi上，1dip = 2px<br>使用dp/dip可以保证在不同设备上显示相同的效果</p>
+</blockquote>
+</li>
+<li><p>dpi  </p>
+<blockquote>
+<p>即屏幕像素密度</p>
+</blockquote>
+</li>
+<li><p>sp  </p>
+<blockquote>
+<p>Scale-Independent Pixels<br>常用来设置文字大小  </p>
+</blockquote>
+</li>
+<li><p>px  </p>
+<blockquote>
+<p>构成图像的最小单位。如获取到的屏幕宽高是以px为单位的  </p>
+</blockquote>
+</li>
+</ul>
+<h4 id="mdpi、hdpi、xdpi、xxdpi"><a href="#mdpi、hdpi、xdpi、xxdpi" class="headerlink" title="mdpi、hdpi、xdpi、xxdpi"></a>mdpi、hdpi、xdpi、xxdpi</h4><ul>
+<li>对应关系  <blockquote>
+<p>mdpi – 120dpi ~ 160dpi<br>hdpi – 160dpi ~ 240dpi<br>xdpi – 240dpi ~ 320dpi<br>xxdpi – 320dpi ~ 480dpi<br>xxxdpi – 480dpi ~ 640dpi  </p>
+</blockquote>
+</li>
+</ul>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="支持各种屏幕尺寸"><a href="#支持各种屏幕尺寸" class="headerlink" title="支持各种屏幕尺寸"></a>支持各种屏幕尺寸</h4><ul>
+<li>使用 wrap_content、 match_parent、 weight  </li>
+<li>使用相对布局，禁用绝对布局  </li>
+<li><p>使用限定符（用于适配平板设备）  </p>
+<blockquote>
+<p>使用最小宽度限定符: 在res下新建layout-large(3.2之前)/layout-sw600dp(3.2之后)文件夹<br>使用布局别名: main.xml / main_twopanes.xml<br>例：  </p>
+</blockquote>
+<p>  默认布局<br>  res/values/layout.xml:  </p>
+  <resources><br>      <item name="main" type="layout">@layout/main</item><br>  </resources><br>  Android 3.2 之前的平板布局<br>  res/values-large/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main_twopanes</item><br>  </resources><br>  Android 3.2 之后的平板布局<br>  res/values-sw600dp/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main_twopanes</item><br>  </resources><br>&gt; 使用屏幕方向限定符<br>&gt; 例：<br>  res/values-sw600dp-land/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main_twopanes</item><br>  </resources><br>  res/values-sw600dp-port/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main</item><br>  </resources>
+</li>
+<li><p>使用自动拉伸位图  </p>
+<blockquote>
+<p>.9图: </p>
+</blockquote>
+</li>
+</ul>
+<h4 id="支持各种屏幕密度"><a href="#支持各种屏幕密度" class="headerlink" title="支持各种屏幕密度"></a>支持各种屏幕密度</h4><ul>
+<li><p>使用非密度制约像素  </p>
+<blockquote>
+<p>使用dp、sp</p>
+</blockquote>
+</li>
+<li><p>提供备用位图</p>
+</li>
+</ul>
+<h4 id="实施自适应用户界面流程"><a href="#实施自适应用户界面流程" class="headerlink" title="实施自适应用户界面流程"></a>实施自适应用户界面流程</h4>
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/17/Android之内存优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -914,7 +1104,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-count">5</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
