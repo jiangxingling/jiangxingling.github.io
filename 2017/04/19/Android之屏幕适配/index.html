@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/19/Android之屏幕适配/index.html">
 <meta property="og:site_name" content="蒋先森">
 <meta property="og:description" content="基本概念屏幕尺寸、屏幕分辨率、屏幕像素密度 屏幕尺寸    指屏幕的对角线长度，单位是英寸，1英寸约等于2.54cm   屏幕分辨率    指在横纵向上的像素点数，单位是px，1px = 1个像素点一般是纵向像素  横向像素，如1920  1080     屏幕像素密度    指每英寸上的像素点数，单位是dpi (dot per inch)屏幕像素密度与屏幕尺寸和屏幕分辨率有关计算方式（以4.9英">
-<meta property="og:updated_time" content="2017-04-20T04:42:12.358Z">
+<meta property="og:updated_time" content="2017-04-21T04:11:51.292Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android之屏幕适配">
 <meta name="twitter:description" content="基本概念屏幕尺寸、屏幕分辨率、屏幕像素密度 屏幕尺寸    指屏幕的对角线长度，单位是英寸，1英寸约等于2.54cm   屏幕分辨率    指在横纵向上的像素点数，单位是px，1px = 1个像素点一般是纵向像素  横向像素，如1920  1080     屏幕像素密度    指每英寸上的像素点数，单位是dpi (dot per inch)屏幕像素密度与屏幕尺寸和屏幕分辨率有关计算方式（以4.9英">
@@ -370,15 +370,18 @@
 <h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><h4 id="支持各种屏幕尺寸"><a href="#支持各种屏幕尺寸" class="headerlink" title="支持各种屏幕尺寸"></a>支持各种屏幕尺寸</h4><ul>
 <li>使用 wrap_content、 match_parent、 weight  </li>
 <li>使用相对布局，禁用绝对布局  </li>
-<li><p>使用限定符（用于适配平板设备）  </p>
-<blockquote>
+<li>使用限定符（用于适配平板设备）  <blockquote>
 <p>使用最小宽度限定符: 在res下新建layout-large(3.2之前)/layout-sw600dp(3.2之后)文件夹<br>使用布局别名: main.xml / main_twopanes.xml<br>例：  </p>
 </blockquote>
-<p>  默认布局<br>  res/values/layout.xml:  </p>
-  <resources><br>      <item name="main" type="layout">@layout/main</item><br>  </resources><br>  Android 3.2 之前的平板布局<br>  res/values-large/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main_twopanes</item><br>  </resources><br>  Android 3.2 之后的平板布局<br>  res/values-sw600dp/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main_twopanes</item><br>  </resources><br>&gt; 使用屏幕方向限定符<br>&gt; 例：<br>  res/values-sw600dp-land/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main_twopanes</item><br>  </resources><br>  res/values-sw600dp-port/layout.xml:<br>  <resources><br>      <item name="main" type="layout">@layout/main</item><br>  </resources>
 </li>
-<li><p>使用自动拉伸位图  </p>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">默认布局  </div><div class="line">res/values/layout.xml:  </div><div class="line">&lt;resources&gt;</div><div class="line">&lt;item name=&quot;main&quot; type=&quot;layout&quot;&gt;@layout/main&lt;/item&gt;</div><div class="line">&lt;/resources&gt;</div><div class="line">Android 3.2 之前的平板布局</div><div class="line">res/values-large/layout.xml:</div><div class="line">&lt;resources&gt;</div><div class="line">&lt;item name=&quot;main&quot; type=&quot;layout&quot;&gt;@layout/main_twopanes&lt;/item&gt;</div><div class="line">&lt;/resources&gt;</div><div class="line">Android 3.2 之后的平板布局</div><div class="line">res/values-sw600dp/layout.xml:</div><div class="line">&lt;resources&gt;</div><div class="line">&lt;item name=&quot;main&quot; type=&quot;layout&quot;&gt;@layout/main_twopanes&lt;/item&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
 <blockquote>
+<p>使用屏幕方向限定符<br>例：</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">res/values-sw600dp-land/layout.xml:</div><div class="line">&lt;resources&gt;</div><div class="line">    &lt;item name=&quot;main&quot; type=&quot;layout&quot;&gt;@layout/main_twopanes&lt;/item&gt;</div><div class="line">&lt;/resources&gt;</div><div class="line">res/values-sw600dp-port/layout.xml:</div><div class="line">&lt;resources&gt;</div><div class="line">    &lt;item name=&quot;main&quot; type=&quot;layout&quot;&gt;@layout/main&lt;/item&gt;</div><div class="line">&lt;/resources&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>使用自动拉伸位图  <blockquote>
 <p>.9图: </p>
 </blockquote>
 </li>
