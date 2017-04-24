@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/24/Java之IO流/index.html">
 <meta property="og:site_name" content="蒋先森">
 <meta property="og:description" content="File类创建File对象 new File(String pathName) File file1 = new File(&amp;quot;E:\\JavaProject\\FileDemo\\test.txt&amp;quot;); if(!file1.exists()){     try {         file1.createNewFile();     } catch (IOException e">
-<meta property="og:updated_time" content="2017-04-24T06:01:39.272Z">
+<meta property="og:updated_time" content="2017-04-24T13:26:40.259Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java之IO流">
 <meta name="twitter:description" content="File类创建File对象 new File(String pathName) File file1 = new File(&amp;quot;E:\\JavaProject\\FileDemo\\test.txt&amp;quot;); if(!file1.exists()){     try {         file1.createNewFile();     } catch (IOException e">
@@ -372,7 +372,31 @@ if(files != null &amp;&amp; files.length &gt; 0){
 }
 </code></pre></li>
 </ul>
-
+<h3 id="RandomAccessFile"><a href="#RandomAccessFile" class="headerlink" title="RandomAccessFile"></a>RandomAccessFile</h3><h4 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h4><p>RandomAccessFile 提供对文件内容的访问，既可以读文件，也可以写文件<br>支持随机访问文件，可以访问文件的任意位置  </p>
+<blockquote>
+<p>(1)Java文件模型<br>在硬盘上的文件是byte byte byte存储的，是数据的集合<br>(2)打开文件<br>有两种模式，”rw”读写，”r”只读<br>RandomAccessFile raf = new RandomAccessFile(file,”rw”)<br>文件指针，打开文件时指针在开头 pointer = 0<br>(3)写方法<br>raf.write(int) —&gt; 只写一个字节，同时指针指向下一个位置<br>(4)读方法<br>int b = raf.read() —&gt; 读一个字节<br>(5)文件读写完后一定要关闭<br>raf.close()  </p>
+</blockquote>
+<h4 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h4><pre><code>RandomAccessFile raf = new RandomAccessFile(file3,&quot;rw&quot;);
+</code></pre><h4 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h4><pre><code>//写入数据
+//指针的位置
+System.out.println(&quot;刚开始时指针的位置：&quot; + raf.getFilePointer());
+//写入一个字节
+raf.write(&apos;A&apos;);
+System.out.println(&quot;写入A后指针的位置：&quot; + raf.getFilePointer());
+String s = &quot;Hello World!&quot;;
+byte[] data = s.getBytes();
+raf.write(data);
+</code></pre><h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><pre><code>//读文件。必须先把指针移到头部
+raf.seek(0);
+//一次性读取 
+byte[] buf = new byte[(int)raf.length()];
+raf.read(buf);
+System.out.println(Arrays.toString(buf));
+//或者：
+String s1 = new String(buf);
+System.out.println(s1);
+</code></pre><h4 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h4><pre><code>raf.close();
+</code></pre>
       
     </div>
 
@@ -527,7 +551,7 @@ if(files != null &amp;&amp; files.length &gt; 0){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#File类"><span class="nav-number">1.</span> <span class="nav-text">File类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建File对象"><span class="nav-number">1.1.</span> <span class="nav-text">创建File对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法"><span class="nav-number">1.2.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历文件目录"><span class="nav-number">1.3.</span> <span class="nav-text">遍历文件目录</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#File类"><span class="nav-number">1.</span> <span class="nav-text">File类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建File对象"><span class="nav-number">1.1.</span> <span class="nav-text">创建File对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用方法"><span class="nav-number">1.2.</span> <span class="nav-text">常用方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#遍历文件目录"><span class="nav-number">1.3.</span> <span class="nav-text">遍历文件目录</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RandomAccessFile"><span class="nav-number">2.</span> <span class="nav-text">RandomAccessFile</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念"><span class="nav-number">2.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建对象"><span class="nav-number">2.2.</span> <span class="nav-text">创建对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#写入数据"><span class="nav-number">2.3.</span> <span class="nav-text">写入数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#读取数据"><span class="nav-number">2.4.</span> <span class="nav-text">读取数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关闭文件"><span class="nav-number">2.5.</span> <span class="nav-text">关闭文件</span></a></li></ol></li></ol></div>
             
 
           </div>
