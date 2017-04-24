@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/24/Java之IO流/index.html">
 <meta property="og:site_name" content="蒋先森">
 <meta property="og:description" content="File类创建File对象 new File(String pathName) File file1 = new File(&amp;quot;E:\\JavaProject\\FileDemo\\test.txt&amp;quot;); if(!file1.exists()){     try {         file1.createNewFile();     } catch (IOException e">
-<meta property="og:updated_time" content="2017-04-24T05:56:42.912Z">
+<meta property="og:updated_time" content="2017-04-24T06:01:39.272Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java之IO流">
 <meta name="twitter:description" content="File类创建File对象 new File(String pathName) File file1 = new File(&amp;quot;E:\\JavaProject\\FileDemo\\test.txt&amp;quot;); if(!file1.exists()){     try {         file1.createNewFile();     } catch (IOException e">
@@ -338,19 +338,15 @@ if(!file1.exists()){
 </code></pre></li>
 </ul>
 <ul>
-<li>new File(String parent, String child)  </li>
+<li><p>new File(String parent, String child)  </p>
+<p>  File file1 = new File(“E:\JavaProject\FileDemo”, “test1.txt”); </p>
+</li>
+<li><p>new File(File f, String child)  </p>
+</li>
 </ul>
-<p>`File file1 = new File(“E:\JavaProject\FileDemo”, “test1.txt”); `` </p>
-<ul>
-<li>new File(File f, String child)  </li>
-</ul>
-<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><p><code>getName()
-exists()
-getAbsolutePath() 
-getParent() 
-isFile()
-isDirectory() 
-length()</code> </p>
+<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><blockquote>
+<p>getName()<br>exists()<br>getAbsolutePath()<br>getParent()<br>isFile()<br>isDirectory()<br>length()</p>
+</blockquote>
 <h4 id="遍历文件目录"><a href="#遍历文件目录" class="headerlink" title="遍历文件目录"></a>遍历文件目录</h4><ul>
 <li><p>仅打印当前目录  </p>
 <pre><code>System.out.println(&quot;仅打印文件子目录：&quot;);
@@ -362,8 +358,8 @@ for(String str:filenames){
 </ul>
 <ul>
 <li><p>遍历子目录  </p>
-<p>  //遍历子目录下的目录</p>
-<pre><code>File[] files = dir.listFiles();
+<pre><code>//遍历子目录下的目录
+File[] files = dir.listFiles();
 if(files != null &amp;&amp; files.length &gt; 0){
     for(File file:files){
         if(file.isDirectory()){

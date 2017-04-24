@@ -343,19 +343,15 @@ if(!file1.exists()){
 </code></pre></li>
 </ul>
 <ul>
-<li>new File(String parent, String child)  </li>
+<li><p>new File(String parent, String child)  </p>
+<p>  File file1 = new File(“E:\JavaProject\FileDemo”, “test1.txt”); </p>
+</li>
+<li><p>new File(File f, String child)  </p>
+</li>
 </ul>
-<p>`File file1 = new File(“E:\JavaProject\FileDemo”, “test1.txt”); `` </p>
-<ul>
-<li>new File(File f, String child)  </li>
-</ul>
-<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><p><code>getName()
-exists()
-getAbsolutePath() 
-getParent() 
-isFile()
-isDirectory() 
-length()</code> </p>
+<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><blockquote>
+<p>getName()<br>exists()<br>getAbsolutePath()<br>getParent()<br>isFile()<br>isDirectory()<br>length()</p>
+</blockquote>
 <h4 id="遍历文件目录"><a href="#遍历文件目录" class="headerlink" title="遍历文件目录"></a>遍历文件目录</h4><ul>
 <li><p>仅打印当前目录  </p>
 <pre><code>System.out.println(&quot;仅打印文件子目录：&quot;);
@@ -367,8 +363,8 @@ for(String str:filenames){
 </ul>
 <ul>
 <li><p>遍历子目录  </p>
-<p>  //遍历子目录下的目录</p>
-<pre><code>File[] files = dir.listFiles();
+<pre><code>//遍历子目录下的目录
+File[] files = dir.listFiles();
 if(files != null &amp;&amp; files.length &gt; 0){
     for(File file:files){
         if(file.isDirectory()){
