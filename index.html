@@ -250,6 +250,241 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/26/App测试之压力测试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xl_Jiang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/taekwondo.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="蒋先森">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/26/App测试之压力测试/" itemprop="url">
+                  App测试之压力测试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T19:24:13+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>压力测试就是让手机在各种各样的情况下进行测试，以发现不容易被发现的缺陷<br>在压力测试下可能出现的异常情况：  </p>
+<blockquote>
+<p>CRASH<br>ANR</p>
+</blockquote>
+<h3 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h3><p>Monkey<br>Monkey Script&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;–用来重复执行操作<br>Monkey Runner</p>
+<h3 id="测试步骤"><a href="#测试步骤" class="headerlink" title="测试步骤"></a>测试步骤</h3><ol>
+<li><p>确保手机连上电脑<br>adb devices //查看设备  </p>
+</li>
+<li><p>发送压力指令<br>adb shell monkey 1000 //表示对设备随机发送1000个指令<br>adb shell monkey -p <package> 1000 //表示对指定的包名发送1000个指令  </package></p>
+</li>
+<li><p>获取包名的方式<br>adb shell pm list package //查看所有包名，不需要root<br>adb shell dumpsys window w | findstr \/ | findstr name= //直接查看应用的包名  </p>
+</li>
+<li><p>如果最后出现Events injected:1000，表示所有指令都已经成功发送，没有异常  </p>
+</li>
+<li><p>查看当前运行的Activity名称<br>进入adb shell<br>运行logcat | grep ActivityManager</p>
+</li>
+</ol>
+<h3 id="高级参数"><a href="#高级参数" class="headerlink" title="高级参数"></a>高级参数</h3><h4 id="throttle"><a href="#throttle" class="headerlink" title="throttle"></a>throttle</h4><p>指定事件之间的时间间隔<br>adb shell monkey -p &lt; package &gt; <strong>–throttle &lt; milliseconds &gt;</strong> 100  </p>
+<h4 id="seed"><a href="#seed" class="headerlink" title="seed"></a>seed</h4><p>指定操作的序列值，便于复现操作<br>adb shell monkey -p <package> <strong>-s <seed(100)></seed(100)></strong> 50   </package></p>
+<h4 id="触摸事件占比"><a href="#触摸事件占比" class="headerlink" title="触摸事件占比"></a>触摸事件占比</h4><p>设置触摸事件的百分比<br>adb shell monkey <strong>-v</strong> -p &lt; package &gt; <strong>–pct-touch &lt; percent &gt;</strong> 100  </p>
+<blockquote>
+<p>-v表示打印事件详情  </p>
+</blockquote>
+<p>如：adb shell monkey -v -p <package> –pct-touch 100 100  </package></p>
+<h4 id="动作事件占比"><a href="#动作事件占比" class="headerlink" title="动作事件占比"></a>动作事件占比</h4><p>设置动作事件所占百分比<br>adb shell monkey -v -p &lt; package &gt; <strong>–pct-motion 80</strong> –pct-touch 20 100  </p>
+<h4 id="轨迹球占比"><a href="#轨迹球占比" class="headerlink" title="轨迹球占比"></a>轨迹球占比</h4><p>adb shell monkey -p &lt; package &gt; <strong>–pct-trackball</strong> &lt; percent &gt; 1000  </p>
+<h4 id="基本导航事件占比"><a href="#基本导航事件占比" class="headerlink" title="基本导航事件占比"></a>基本导航事件占比</h4><p>adb shell monkey <strong>–pct-nav &lt; percent &gt;</strong> 1000  </p>
+<h4 id="主要导航事件（包括中间键、返回键、菜单按键等）占比"><a href="#主要导航事件（包括中间键、返回键、菜单按键等）占比" class="headerlink" title="主要导航事件（包括中间键、返回键、菜单按键等）占比"></a>主要导航事件（包括中间键、返回键、菜单按键等）占比</h4><p>adb shell monkey <strong>–pct-majornav &lt; percent &gt;</strong> 1000  </p>
+<h4 id="系统导航事件（包括HOME、BACK、拨号、音量键）占比"><a href="#系统导航事件（包括HOME、BACK、拨号、音量键）占比" class="headerlink" title="系统导航事件（包括HOME、BACK、拨号、音量键）占比"></a>系统导航事件（包括HOME、BACK、拨号、音量键）占比</h4><p>adb shell monkey <strong>–pct-syskeys &lt; percent &gt;</strong> 1000  </p>
+<h4 id="启动Activity占比"><a href="#启动Activity占比" class="headerlink" title="启动Activity占比"></a>启动Activity占比</h4><p>adb shell monkey <strong>–pct-appswitch &lt; percent &gt;</strong> 1000  </p>
+<h4 id="不常用事件占比"><a href="#不常用事件占比" class="headerlink" title="不常用事件占比"></a>不常用事件占比</h4><p>adb shell monkey <strong>–pct-anyevent &lt; percent &gt;</strong> 1000  </p>
+<h4 id="崩溃事件"><a href="#崩溃事件" class="headerlink" title="崩溃事件"></a>崩溃事件</h4><p>在发生崩溃时忽略并继续执行指令<br>adb shell monkey <strong>–ginore-crashes</strong> 1000  </p>
+<h4 id="超时事件"><a href="#超时事件" class="headerlink" title="超时事件"></a>超时事件</h4><p>出现ANR时继续执行<br>adb shell monkey <strong>–ignore-timeouts</strong> 1000</p>
+<h3 id="ANR信息"><a href="#ANR信息" class="headerlink" title="ANR信息"></a>ANR信息</h3><p>log存放在data/anr/trace.txt文件中</p>
+<h3 id="Monkey-Script"><a href="#Monkey-Script" class="headerlink" title="Monkey Script"></a>Monkey Script</h3><p>adb shell monkey -f &lt; scriptfile &gt; &lt; event-count &gt;<br>scriptfile是脚本文件，event-count表示执行次数  </p>
+<h4 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h4><ul>
+<li><p>DispatchTrackball(int action, float x, float y)<br>轨迹球事件。action为0代表按下，为1代表弹起，x/y代表坐标  </p>
+</li>
+<li><p>DispatchPointer(int action, float x, float y)<br>点击事件（只需要关注第三至五个参数，其余使用默认，坐标值用uiautomatorviewer获取）  </p>
+</li>
+<li><p>DispatchString(String text)<br>输入字符串  </p>
+</li>
+<li><p>LaunchActivity(package, Activity)<br>启动应用  </p>
+</li>
+<li><p>UserWait(int milliseconds)<br>等待  </p>
+</li>
+<li><p>DispatchPress(int keycode)<br>按下键值，回车键值为66  </p>
+</li>
+</ul>
+<p>例：重复执行以下操作：在浏览器中输入查询词并进行搜索  </p>
+<ol>
+<li>启动APP   </li>
+<li>点击输入框  </li>
+<li>输入查询词  </li>
+<li>点击键盘的回车  </li>
+<li>点击搜索按钮  </li>
+<li>等待结果出现  </li>
+<li>清除前面的查询词  </li>
+</ol>
+<p>完整脚本如下：  </p>
+<p><code>typ=user  
+count=10  
+speed=1.0  
+start data &gt;&gt;  
+LaunchActivity(com.android.browser, org.chromium.chrome.browser.ChromeTabbedActivity)  
+UserWait(5000)  
+DispatchPointer(10,10,0,1000,200,1,1,-1,1,1,0,0)   
+DispatchPointer(10,10,1,1000,200,1,1,-1,1,1,0,0)  
+DispatchString(baidu)  
+UserWait(3000)  
+DispatchPress(66)  
+UserWait(3000)
+DispatchPointer(10,10,0,700,500,1,1,-1,1,1,0,0)   
+DispatchPointer(10,10,1,700,500,1,1,-1,1,1,0,0)  
+DispatchPointer(10,10,0,750,300,1,1,-1,1,1,0,0)   
+DispatchPointer(10,10,1,750,300,1,1,-1,1,1,0,0)</code></p>
+<p>将写好的脚本命名为“test1.script”，放到手机/data/local/tmp/目录下，进入该目录，执行monkey -f test1.script 2</p>
+<h3 id="Monkey-Runner-API"><a href="#Monkey-Runner-API" class="headerlink" title="Monkey Runner API"></a>Monkey Runner API</h3><ul>
+<li><p>alert –警告框<br>void alert(String message, String title, String okTitle)<br>from com.android.monkeyrunner import MonkeyRunner MonkeyRunner.alert(“this is alert”,”Hi”,”OK”)  </p>
+</li>
+<li><p>waitForConnection(float timeout, String deviceId)<br>等待设备连接，有多个deviceid时需要指明具体哪个设备。timeout为超时时间，以秒为单位  </p>
+</li>
+</ul>
+<h3 id="MonkeyDevice-API"><a href="#MonkeyDevice-API" class="headerlink" title="MonkeyDevice API"></a>MonkeyDevice API</h3><ul>
+<li><p>drag(tuple start, tuple end, float duration, integer steps)<br>在操作页面上进行拖动<br>duration为手势持续时间<br>steps为插值点的步数，默认为10  </p>
+</li>
+<li><p>press(String keyCode, dictionary type)<br>keyCode为键值<br>type为类型，可以是DOWN/UP/DOWN_AND_UP  </p>
+</li>
+<li><p>startActivity(package+”/“+Activity)<br>启动APP  </p>
+</li>
+<li><p>touch(integer x, integer y, integer type)<br>type为DOWN/UP/DOWN_AND_UP  </p>
+</li>
+<li><p>type(String message)<br>输入字符串  </p>
+</li>
+<li><p>MonkeyImage takeSnapshot()<br>截屏  </p>
+</li>
+</ul>
+<h3 id="MonkeyImage-API"><a href="#MonkeyImage-API" class="headerlink" title="MonkeyImage API"></a>MonkeyImage API</h3><ul>
+<li><p>boolean sameAs(MonkeyImage other, float percent)<br>对比图像  </p>
+</li>
+<li><p>writeToFile(String path, String format)<br>保存文件图像<br>path指定保存路径，format指定保存格式，如png、jpg等  </p>
+</li>
+</ul>
+<h3 id="运行python脚本"><a href="#运行python脚本" class="headerlink" title="运行python脚本"></a>运行python脚本</h3><p>实例:实现在搜索框中输入查询词并截图 #!/usr/bin/python  </p>
+<p>`#coding=utf-8<br>from com.android.monkeyrunner import MonkeyRunner,MonkeyDevice,MonkeyImage  </p>
+<p>#连接设备<br>device=MonkeyRunner.waitForConnection(5,”d02fd03b”)  </p>
+<p>#启动App<br>device.startActivity(component=”com.android.browser/.ChromeTabbedActivity”)<br>MonkeyRunner.sleep(1)  </p>
+<p>#点击输入框<br>device.touch(100,150,”DOWN_AND_UP”)<br>MonkeyRunner.sleep(1)  </p>
+<p>#输入查询词<br>device.type(‘monkey test’) MonkeyRunner.sleep(1)  </p>
+<p>#点击回车,等待查询结果<br>device.press(‘KEYCODE_ENTER’, “DOWN_AND_UP”)<br>MonkeyRunner.sleep(1)  </p>
+<p>#截图<br>image = device.takeSnapshot()  </p>
+<p>#保存截图<br>image.writeToFile(‘./screenshot’,’png’)  `</p>
+<h3 id="运行过程中出现的问题"><a href="#运行过程中出现的问题" class="headerlink" title="运行过程中出现的问题"></a>运行过程中出现的问题</h3><ol>
+<li>在waitforConnection()语句后总是报NullPointerException错误<br>解决方法：不能用真机调试，要用AVD</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/24/Java之IO流/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -353,7 +588,7 @@ if(!file1.exists()){
 <p>getName()<br>exists()<br>getAbsolutePath()<br>getParent()<br>isFile()<br>isDirectory()<br>length()</p>
 </blockquote>
 <h4 id="遍历文件目录"><a href="#遍历文件目录" class="headerlink" title="遍历文件目录"></a>遍历文件目录</h4><ul>
-<li><p>仅打印当前目录  </p>
+<li><p>仅打印当前目录（list()方法返回字符串数组）  </p>
 <pre><code>System.out.println(&quot;仅打印文件子目录：&quot;);
 String[] filenames = dir.list();
 for(String str:filenames){
@@ -362,7 +597,7 @@ for(String str:filenames){
 </code></pre></li>
 </ul>
 <ul>
-<li><p>遍历子目录  </p>
+<li><p>遍历子目录（listFiles()方法返回File对象的数组）  </p>
 <pre><code>//遍历子目录下的目录
 File[] files = dir.listFiles();
 if(files != null &amp;&amp; files.length &gt; 0){
@@ -382,26 +617,189 @@ if(files != null &amp;&amp; files.length &gt; 0){
 <p>(1)Java文件模型<br>在硬盘上的文件是byte byte byte存储的，是数据的集合<br>(2)打开文件<br>有两种模式，”rw”读写，”r”只读<br>RandomAccessFile raf = new RandomAccessFile(file,”rw”)<br>文件指针，打开文件时指针在开头 pointer = 0<br>(3)写方法<br>raf.write(int) —&gt; 只写一个字节，同时指针指向下一个位置<br>(4)读方法<br>int b = raf.read() —&gt; 读一个字节<br>(5)文件读写完后一定要关闭<br>raf.close()  </p>
 </blockquote>
 <h4 id="创建对象"><a href="#创建对象" class="headerlink" title="创建对象"></a>创建对象</h4><pre><code>RandomAccessFile raf = new RandomAccessFile(file3,&quot;rw&quot;);
-</code></pre><h4 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h4><pre><code>//写入数据
-//指针的位置
+</code></pre><h4 id="写入数据"><a href="#写入数据" class="headerlink" title="写入数据"></a>写入数据</h4><pre><code>//指针的位置
 System.out.println(&quot;刚开始时指针的位置：&quot; + raf.getFilePointer());
-//写入一个字节
+
+//写入一个字符
 raf.write(&apos;A&apos;);
 System.out.println(&quot;写入A后指针的位置：&quot; + raf.getFilePointer());
+
+//写入字符串
 String s = &quot;Hello World!&quot;;
 byte[] data = s.getBytes();
 raf.write(data);
-</code></pre><h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><pre><code>//读文件。必须先把指针移到头部
+System.out.println(&quot;写入&apos;Hello World!&apos;后指针的位置：&quot; + raf.getFilePointer());
+
+//写入整数（因为一次只能写入一个字节，所以要从高八位开始依次写到低八位）
+int num = 100;
+raf.write(num &gt;&gt;&gt; 24);
+raf.write(num &gt;&gt;&gt; 16);
+raf.write(num &gt;&gt;&gt; 8);
+raf.write(num);
+//或者
+raf.writeInt(num);
+System.out.println(&quot;写入整数后指针的位置：&quot; + raf.getFilePointer());
+</code></pre><h4 id="读取数据"><a href="#读取数据" class="headerlink" title="读取数据"></a>读取数据</h4><pre><code>//读文件（必须先把指针移到头部）
 raf.seek(0);
+
 //一次性读取 
 byte[] buf = new byte[(int)raf.length()];
 raf.read(buf);
-System.out.println(Arrays.toString(buf));
-//或者：
+System.out.println(&quot;一次性读取并输出：&quot; + Arrays.toString(buf));
+
+//或者以字符串形式输出（无法读取整数）
 String s1 = new String(buf);
-System.out.println(s1);
+System.out.println(&quot;转换成字符串输出：&quot; + s1);
+
+//读取整数
+int n1 = raf.readInt();
+//或者：
+int n2 = (int) (buf[0] &lt;&lt; 24|buf[1] &lt;&lt; 16 | buf[2] &lt;&lt; 8 | buf[3]);
 </code></pre><h4 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h4><pre><code>raf.close();
-</code></pre>
+</code></pre><h3 id="IO流"><a href="#IO流" class="headerlink" title="IO流"></a>IO流</h3><h4 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h4><p>IO流分为输入流，输出流，也可以分为字节流，字符流</p>
+<h4 id="字节流"><a href="#字节流" class="headerlink" title="字节流"></a>字节流</h4><p>EOF和-1表示到达文件结尾</p>
+<h5 id="InputStream"><a href="#InputStream" class="headerlink" title="InputStream"></a>InputStream</h5><p>抽象了应用程序读取数据的方式<br>基本方法：  </p>
+<blockquote>
+<p>int b = in.read() –读取一个字节无符号填充到int低八位<br>in.read(byte[] buf) –读取数据填充到字节数组buf中<br>in.read(byte[] buf, int start, int size) –从start开始读取size个字节到buf中</p>
+</blockquote>
+<h5 id="FileInputStream"><a href="#FileInputStream" class="headerlink" title="FileInputStream"></a>FileInputStream</h5><p>是InputStream的子类，具体实现在文件上读取数据  </p>
+<ul>
+<li><p>一个字节一个字节的读取输出  </p>
+<pre><code>//把文件作为字节流进行读操作
+FileInputStream in = new FileInputStream(fileName);
+int b;
+int i = 1;
+System.out.println(&quot;每次输出一个字节：&quot;);
+while((b = in.read()) != -1){
+    System.out.print(b + &quot; &quot;);
+    //每读取10个字节换行
+    if(i++ % 10 == 0){
+        System.out.println();
+    }
+}
+System.out.println();
+in.close();
+</code></pre></li>
+<li><p>批量读取输出  </p>
+<pre><code>FileInputStream in = new FileInputStream(fileName);
+byte[] buf = new byte[1024];
+//从in中批量读取字节放入到buf中，返回读到的字节的个数
+int bytes = in.read(buf, 0, buf.length);
+int j = 1;
+System.out.println(&quot;批量读取：&quot;);
+for(int i = 0; i &lt; bytes; i++){
+    System.out.print((buf[i] &amp; 0xff) + &quot; &quot;);
+    if(j++ % 10 == 0){
+        System.out.println();
+    }
+}
+System.out.println();
+in.close();
+</code></pre></li>
+</ul>
+<h5 id="DataInputStream"><a href="#DataInputStream" class="headerlink" title="DataInputStream"></a>DataInputStream</h5><p>对流功能的扩展，可以更加方便的读取int、long、字符等类型数据</p>
+<ul>
+<li><p>读取数据  </p>
+<pre><code>public static void readData(File file) throws IOException{
+    DataInputStream dis = new DataInputStream(
+            new FileInputStream(file));
+
+    int n = dis.readInt();
+    String str = dis.readUTF();
+    dis.close();
+
+    System.out.println(n + str);
+}
+</code></pre></li>
+</ul>
+<h5 id="BufferedInputStream"><a href="#BufferedInputStream" class="headerlink" title="BufferedInputStream"></a>BufferedInputStream</h5><p>提供了带缓冲区的操作，提高了IO的性能  </p>
+<ul>
+<li><p>拷贝文件</p>
+<pre><code>public static void copyFileByBuffer(File srcFile, File destFile) throws IOException{
+    if(!srcFile.exists()){
+        System.out.println(srcFile + &quot;文件不存在&quot;);
+    }else if(!srcFile.isFile()){
+        System.out.println(srcFile + &quot;不是文件&quot;);
+    }else{
+        BufferedInputStream in = new BufferedInputStream(
+                new FileInputStream(srcFile));
+        BufferedOutputStream out = new BufferedOutputStream(
+                new FileOutputStream(destFile));
+
+        int c;
+        while((c=in.read())!=-1){
+            out.write(c);
+            out.flush();  //刷新缓冲区
+        }
+        in.close();
+        out.close();
+    }
+}
+</code></pre></li>
+</ul>
+<h5 id="OutputStream"><a href="#OutputStream" class="headerlink" title="OutputStream"></a>OutputStream</h5><p>抽象了应用程序写出数据的方式<br>基本方法： </p>
+<blockquote>
+<p>out.write(int b) –&gt; 写出一个byte（b的低八位）到流<br>out.write(byte[] buf) –&gt; 将buf字节数组都写入到流<br>out.write(byte[] buf, int start, int size) –&gt; 从buf中的start开始写size个字节到流</p>
+</blockquote>
+<h5 id="FileOutputStream"><a href="#FileOutputStream" class="headerlink" title="FileOutputStream"></a>FileOutputStream</h5><p>是OutputStream的子类，实现向文件中写出byte数据的方法  </p>
+<ul>
+<li><p>一个字节一个字节的写入数据</p>
+<pre><code>//如果文件不存在，则直接创建，如果存在，则删除
+FileOutputStream out = new FileOutputStream(file);
+//第二个参数表示是否追加。
+//FileOutputStream out = new FileOutputStream(file, true);
+
+out.write(&apos;A&apos;); //写A字符的低八位
+
+//写入一个整数
+out.write(10 &gt;&gt;&gt; 24);
+out.write(10 &gt;&gt;&gt; 16);
+out.write(10 &gt;&gt;&gt; 8);
+out.write(10);
+
+//写入字符串
+byte[] str = &quot;ni hao&quot;.getBytes();
+out.write(str);
+
+out.close();
+</code></pre></li>
+<li><p>复制文件  </p>
+<pre><code>public static void copyFile(File srcFile, File destFile) throws IOException{
+    if(!srcFile.exists()){
+        System.out.println(srcFile + &quot;文件不存在&quot;);
+    }else if(!srcFile.isFile()){
+        System.out.println(srcFile + &quot;不是文件&quot;);
+    }else{
+        FileInputStream in = new FileInputStream(srcFile);
+        FileOutputStream out = new FileOutputStream(destFile);
+        byte[] buf = new byte[1024];
+        int b;
+        while((b=in.read(buf, 0, buf.length))!=-1){
+            out.write(buf, 0, b);
+        }
+        in.close();
+        out.close();
+    }
+</code></pre></li>
+</ul>
+<h5 id="DataOutputStream"><a href="#DataOutputStream" class="headerlink" title="DataOutputStream"></a>DataOutputStream</h5><p>常用方法：  </p>
+<blockquote>
+<p>writeInt()<br>writeDouble()<br>writeUTF()  </p>
+</blockquote>
+<ul>
+<li><p>写入数据</p>
+<pre><code>public static void writeData(File file) throws IOException{
+    DataOutputStream dos = new DataOutputStream(
+            new FileOutputStream(file));
+    dos.writeInt(10);
+    dos.writeUTF(&quot;你好&quot;);
+    dos.close();
+
+    FileInputStreamUtils.printDataByByteArray(file);
+}
+</code></pre></li>
+</ul>
+
           
         
       
@@ -1300,7 +1698,7 @@ System.out.println(s1);
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
