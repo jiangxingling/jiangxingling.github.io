@@ -94,7 +94,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/04/26/App测试之压力测试/index.html">
 <meta property="og:site_name" content="蒋先森">
 <meta property="og:description" content="概念压力测试就是让手机在各种各样的情况下进行测试，以发现不容易被发现的缺陷在压力测试下可能出现的异常情况：    CRASHANR  使用的工具MonkeyMonkey Script&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;–用来重复执行操作Monkey Runner 测试步骤 确保手机连上电脑adb devices //查看设备    发送压力指令adb">
-<meta property="og:updated_time" content="2017-04-26T12:01:37.662Z">
+<meta property="og:updated_time" content="2017-04-26T12:04:40.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="App测试之压力测试">
 <meta name="twitter:description" content="概念压力测试就是让手机在各种各样的情况下进行测试，以发现不容易被发现的缺陷在压力测试下可能出现的异常情况：    CRASHANR  使用的工具MonkeyMonkey Script&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;–用来重复执行操作Monkey Runner 测试步骤 确保手机连上电脑adb devices //查看设备    发送压力指令adb">
@@ -382,22 +382,7 @@
 <li>清除前面的查询词  </li>
 </ol>
 <p>完整脚本如下：  </p>
-<p><code>typ=user  
-count=10  
-speed=1.0  
-start data &gt;&gt;  
-LaunchActivity(com.android.browser, org.chromium.chrome.browser.ChromeTabbedActivity)  
-UserWait(5000)  
-DispatchPointer(10,10,0,1000,200,1,1,-1,1,1,0,0)   
-DispatchPointer(10,10,1,1000,200,1,1,-1,1,1,0,0)  
-DispatchString(baidu)  
-UserWait(3000)  
-DispatchPress(66)  
-UserWait(3000)
-DispatchPointer(10,10,0,700,500,1,1,-1,1,1,0,0)   
-DispatchPointer(10,10,1,700,500,1,1,-1,1,1,0,0)  
-DispatchPointer(10,10,0,750,300,1,1,-1,1,1,0,0)   
-DispatchPointer(10,10,1,750,300,1,1,-1,1,1,0,0)</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">typ=user  </div><div class="line">count=10  </div><div class="line">speed=1.0  </div><div class="line">start data &gt;&gt;  </div><div class="line">LaunchActivity(com.android.browser, org.chromium.chrome.browser.ChromeTabbedActivity)  </div><div class="line">UserWait(5000)  </div><div class="line">DispatchPointer(10,10,0,1000,200,1,1,-1,1,1,0,0)   </div><div class="line">DispatchPointer(10,10,1,1000,200,1,1,-1,1,1,0,0)  </div><div class="line">DispatchString(baidu)  </div><div class="line">UserWait(3000)  </div><div class="line">DispatchPress(66)  </div><div class="line">UserWait(3000)</div><div class="line">DispatchPointer(10,10,0,700,500,1,1,-1,1,1,0,0)   </div><div class="line">DispatchPointer(10,10,1,700,500,1,1,-1,1,1,0,0)  </div><div class="line">DispatchPointer(10,10,0,750,300,1,1,-1,1,1,0,0)   </div><div class="line">DispatchPointer(10,10,1,750,300,1,1,-1,1,1,0,0)</div></pre></td></tr></table></figure>
 <p>将写好的脚本命名为“test1.script”，放到手机/data/local/tmp/目录下，进入该目录，执行monkey -f test1.script 2</p>
 <h3 id="Monkey-Runner-API"><a href="#Monkey-Runner-API" class="headerlink" title="Monkey Runner API"></a>Monkey Runner API</h3><ul>
 <li><p>alert –警告框<br>void alert(String message, String title, String okTitle)<br>from com.android.monkeyrunner import MonkeyRunner MonkeyRunner.alert(“this is alert”,”Hi”,”OK”)  </p>
@@ -426,14 +411,7 @@ DispatchPointer(10,10,1,750,300,1,1,-1,1,1,0,0)</code></p>
 </li>
 </ul>
 <h3 id="运行python脚本"><a href="#运行python脚本" class="headerlink" title="运行python脚本"></a>运行python脚本</h3><p>实例:实现在搜索框中输入查询词并截图 #!/usr/bin/python  </p>
-<p>`#coding=utf-8<br>from com.android.monkeyrunner import MonkeyRunner,MonkeyDevice,MonkeyImage  </p>
-<p>#连接设备<br>device=MonkeyRunner.waitForConnection(5,”d02fd03b”)  </p>
-<p>#启动App<br>device.startActivity(component=”com.android.browser/.ChromeTabbedActivity”)<br>MonkeyRunner.sleep(1)  </p>
-<p>#点击输入框<br>device.touch(100,150,”DOWN_AND_UP”)<br>MonkeyRunner.sleep(1)  </p>
-<p>#输入查询词<br>device.type(‘monkey test’) MonkeyRunner.sleep(1)  </p>
-<p>#点击回车,等待查询结果<br>device.press(‘KEYCODE_ENTER’, “DOWN_AND_UP”)<br>MonkeyRunner.sleep(1)  </p>
-<p>#截图<br>image = device.takeSnapshot()  </p>
-<p>#保存截图<br>image.writeToFile(‘./screenshot’,’png’)  `</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">#coding=utf-8  </div><div class="line">from com.android.monkeyrunner import MonkeyRunner,MonkeyDevice,MonkeyImage  </div><div class="line">#连接设备  </div><div class="line">device=MonkeyRunner.waitForConnection(5,&quot;d02fd03b&quot;)  </div><div class="line">#启动App  </div><div class="line">device.startActivity(component=&quot;com.android.browser/.ChromeTabbedActivity&quot;)  </div><div class="line">MonkeyRunner.sleep(1)  </div><div class="line">#点击输入框  </div><div class="line">device.touch(100,150,&quot;DOWN_AND_UP&quot;)  </div><div class="line">MonkeyRunner.sleep(1)  </div><div class="line">#输入查询词  </div><div class="line">device.type(&apos;monkey test&apos;) MonkeyRunner.sleep(1)  </div><div class="line">#点击回车,等待查询结果  </div><div class="line">device.press(&apos;KEYCODE_ENTER&apos;, &quot;DOWN_AND_UP&quot;)  </div><div class="line">MonkeyRunner.sleep(1)  </div><div class="line">#截图  </div><div class="line">image = device.takeSnapshot()  </div><div class="line">#保存截图  </div><div class="line">image.writeToFile(&apos;./screenshot&apos;,&apos;png&apos;)</div></pre></td></tr></table></figure>
 <h3 id="运行过程中出现的问题"><a href="#运行过程中出现的问题" class="headerlink" title="运行过程中出现的问题"></a>运行过程中出现的问题</h3><ol>
 <li>在waitforConnection()语句后总是报NullPointerException错误<br>解决方法：不能用真机调试，要用AVD</li>
 </ol>
